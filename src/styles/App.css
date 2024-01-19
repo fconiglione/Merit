@@ -1,3 +1,7 @@
 html {
   background-color: #ef233c;
 }
+h1, h2, h3, h4, h5, h6, p, a, li {
+  color: #f4f4f4;
+  font-family: "Inter", sans-serif;
+}
