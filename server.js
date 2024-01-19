@@ -62,6 +62,23 @@ app.get('/data/course-data', async (req, res) => {
     }
 });
 
+// Adding course data
+app.post('/data/course-data', async (req, res) => {
+    const { cname, code } = req.body;
+
+    try {
+        const result = await pool.query(
+            'INSERT INTO courses (cname, code) VALUES ($1, $2) RETURNING *',
+            [cname, code]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // Output server port to console
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

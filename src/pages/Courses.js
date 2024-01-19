@@ -3,6 +3,10 @@ import axios from "axios";
 
 function Courses() {
     const [courses, setCourses] = useState([]);
+    const [formData, setFormData] = useState({
+        cname: '',
+        code: '',
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -16,6 +20,30 @@ function Courses() {
 
         fetchData();
     }, []);
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post('http://localhost:3001/data/course-data', formData);
+            // Fetch the new data once submitted
+            const response = await axios.get('http://localhost:3001/data/course-data');
+            setCourses(response.data);
+            setFormData({
+                cname: '',
+                code: '',
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error.message);
+        }
+    };
 
     return (
         <main>
@@ -33,9 +61,7 @@ function Courses() {
                 </div>
                 <div className="add-courses-form">
                     <div className="add-courses-form-container">
-                        <form action="/data/course-data" id="course-form"
-                              //onSubmit={handleSubmit}
-                        >
+                        <form action="/data/course-data" id="course-form" onSubmit={handleSubmit}>
                             <div className="course-form-content">
                                 <fieldset>
                                     <label htmlFor="cname">Course name</label>
@@ -45,8 +71,20 @@ function Courses() {
                                         id="cname"
                                         name="cname"
                                         placeholder="Enter course name"
-                                        // value={formData.cname}
-                                        // onChange={handleInputChange}
+                                        value={formData.cname}
+                                        onChange={handleInputChange}
+                                    />
+                                </fieldset>
+                                <fieldset>
+                                    <label htmlFor="code">Course code</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="code"
+                                        name="code"
+                                        placeholder="Enter course code"
+                                        value={formData.code}
+                                        onChange={handleInputChange}
                                     />
                                 </fieldset>
                             </div>

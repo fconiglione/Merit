@@ -318,3 +318,9 @@
 .courses-table-container tr:nth-child(odd) {
     background-color: #ef233c;
 }
+@media screen and (max-width: 720px) {
+    .course-form-content {
+        flex-direction: column;
+        justify-content: unset;
+    }
+}
