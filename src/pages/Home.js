@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 
 function Home() {
     const [enrolledStudents, setEnrolledStudents] = useState(0);
+    const [listedCourses, setListedCourses] = useState(0);
 
     useEffect(() => {
         fetch('http://localhost:3001/data/student-data')
             .then(response => response.json())
             .then(data => setEnrolledStudents(data.length))
             .catch(error => console.error('Error fetching student data:', error));
+
+        fetch('http://localhost:3001/data/course-data')
+            .then(response => response.json())
+            .then(data => setListedCourses(data.length))
+            .catch(error => console.error('Error fetching course data:', error));
     }, []);
     return (
         <main>
@@ -30,7 +36,7 @@ function Home() {
                                 <i className="fa-solid fa-book"></i>
                             </div>
                             <div>
-                                <h1>5</h1>
+                                <h1>{listedCourses}</h1>
                                 <p>Courses Listed</p>
                             </div>
                         </div>
