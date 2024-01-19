@@ -5,6 +5,29 @@ function Results() {
     const port = 3001;
     const apiUrl = `http://${window.location.hostname}:${port}`;
 
+    const [students, setStudents] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [results, setResults] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const studentsResponse = await axios.get(apiUrl + '/data/student-data');
+                setStudents(studentsResponse.data);
+                const coursesResponse = await axios.get(apiUrl + '/data/course-data');
+                setCourses(coursesResponse.data);
+                const resultsResponse = await axios.get(apiUrl + '/data/result-data');
+                setResults(resultsResponse.data);
+            } catch (error) {
+                console.error('Error fetching data:', error.message);
+            }
+
+            fetchData();
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <main>
             <section className="add-results">
@@ -35,9 +58,11 @@ function Results() {
                                         // onChange={handleInputChange}
                                     >
                                         <option value="" disabled selected>Select a student</option>
-                                        <option value="johnDoe">John Doe</option>
-                                        <option value="janeDoe">Jane Doe</option>
-                                        <option value="bobSmith">Bob Smith</option>
+                                        {students.map((student) => (
+                                            <option key={student.student_id} value={`${student.fname} ${student.lname}`}>
+                                                {`${student.lname}, ${student.fname}`}
+                                            </option>
+                                        ))}
                                     </select>
                                 </fieldset>
                                 <fieldset>
@@ -50,9 +75,11 @@ function Results() {
                                         // onChange={handleInputChange}
                                     >
                                         <option value="" disabled selected>Select a course</option>
-                                        <option value="math">Mathematics</option>
-                                        <option value="physics">Physics</option>
-                                        <option value="computerScience">Computer Science</option>
+                                        {courses.map((course) => (
+                                            <option key={course.course_id} value={course.cname}>
+                                                {`${course.cname} - ${course.code}`}
+                                            </option>
+                                        ))}
                                     </select>
                                 </fieldset>
                                 <fieldset>
@@ -65,12 +92,11 @@ function Results() {
                                         // onChange={handleInputChange}
                                     >
                                         <option value="" disabled selected>Select a result</option>
-                                        <option value="A">A</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                        <option value="E">E</option>
-                                        <option value="F">F</option>
+                                        {results.map((result) => (
+                                            <option key={result.result_id} value={result.result}>
+                                                {result.result}
+                                            </option>
+                                        ))}
                                     </select>
                                 </fieldset>
                             </div>
