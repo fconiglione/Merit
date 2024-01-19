@@ -36,6 +36,8 @@ function Courses() {
         event.preventDefault();
         try {
             await axios.post(apiUrl + '/data/course-data', formData);
+            // Add a notification
+            alert('Course added successfully!');
             // Fetch the new data once submitted
             const response = await axios.get(apiUrl + '/data/course-data');
             setCourses(response.data);

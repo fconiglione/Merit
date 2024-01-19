@@ -90,6 +90,44 @@ app.get('/data/score-data', async (req, res) => {
     }
 });
 
+// Adding results data
+
+app.post('/data/result-data', async (req, res) => {
+    const { studentName, cname, score } = req.body;
+
+    try {
+        // Split the studentName into fname and lname
+        const [fname, lname] = studentName.split(' ');
+
+        // Get the student_id, course_id, and score_id based on the provided values
+        const studentResult = await pool.query(
+            'SELECT student_id FROM students WHERE fname = $1 AND lname = $2',
+            [fname, lname]
+        );
+
+        const courseResult = await pool.query(
+            'SELECT course_id FROM courses WHERE cname = $1',
+            [cname]
+        );
+
+        const scoreResult = await pool.query(
+            'SELECT score_id FROM scores WHERE score = $1',
+            [score]
+        );
+
+        const result = await pool.query(
+            'INSERT INTO results (student_id, course_id, score_id) VALUES ($1, $2, $3) RETURNING *',
+            [studentResult.rows[0].student_id, courseResult.rows[0].course_id, scoreResult.rows[0].score_id]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 // Output server port to console
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

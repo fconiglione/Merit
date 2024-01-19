@@ -37,6 +37,8 @@ function Home() {
         event.preventDefault();
         try {
             await axios.post(apiUrl + '/data/student-data', formData);
+            // Add a notification
+            alert('Student added successfully!');
             // Fetch the new data once submitted
             const response = await axios.get(apiUrl + '/data/student-data');
             setStudents(response.data);
