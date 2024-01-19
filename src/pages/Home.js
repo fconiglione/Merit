@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 function Home() {
+    const port = 3001;
+    const apiUrl = `http://${window.location.hostname}:${port}`;
+
     const [enrolledStudents, setEnrolledStudents] = useState(0);
     const [listedCourses, setListedCourses] = useState(0);
 
     useEffect(() => {
-        fetch('http://localhost:3001/data/student-data')
+        fetch(apiUrl + '/data/student-data')
             .then(response => response.json())
             .then(data => setEnrolledStudents(data.length))
             .catch(error => console.error('Error fetching student data:', error));
 
-        fetch('http://localhost:3001/data/course-data')
+        fetch(apiUrl + '/data/course-data')
             .then(response => response.json())
             .then(data => setListedCourses(data.length))
             .catch(error => console.error('Error fetching course data:', error));

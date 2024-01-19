@@ -2,6 +2,9 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 function Courses() {
+    const port = 3001;
+    const apiUrl = `http://${window.location.hostname}:${port}`;
+
     const [courses, setCourses] = useState([]);
     const [formData, setFormData] = useState({
         cname: '',
@@ -11,7 +14,7 @@ function Courses() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/data/course-data');
+                const response = await axios.get(apiUrl + '/data/course-data');
                 setCourses(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error.message);
@@ -32,9 +35,9 @@ function Courses() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('http://localhost:3001/data/course-data', formData);
+            await axios.post(apiUrl + '/data/course-data', formData);
             // Fetch the new data once submitted
-            const response = await axios.get('http://localhost:3001/data/course-data');
+            const response = await axios.get(apiUrl + '/data/course-data');
             setCourses(response.data);
             setFormData({
                 cname: '',
