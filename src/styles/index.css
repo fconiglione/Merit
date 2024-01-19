@@ -411,3 +411,47 @@
         justify-content: unset;
     }
 }
+.results-table {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.results-table-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.results-table-nav h1 {
+    font-size: 1em;
+}
+.results-table-nav button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.results-table-nav button i {
+    color: #f4f4f4;
+    font-size: 1em;
+}
+.results-table-container table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1em;
+}
+.results-table-container th, .results-table-container td {
+    text-align: left;
+    padding: 8px;
+    font-weight: 500;
+}
+.results-table-container th {
+    background-color: #d80032;
+    color: #f4f4f4;
+    font-weight: 700;
+}
+.results-table-container tr:nth-child(even) {
+    background-color: #d80032;
+}
+.results-table-container tr:nth-child(odd) {
+    background-color: #ef233c;
+}

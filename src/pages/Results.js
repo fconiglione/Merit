@@ -56,11 +56,11 @@ function Results() {
                                     </select>
                                 </fieldset>
                                 <fieldset>
-                                    <label htmlFor="result">Result</label>
+                                    <label htmlFor="score">Score</label>
                                     <select
                                         required
-                                        id="result"
-                                        name="result"
+                                        id="score"
+                                        name="score"
                                         // value={formData.studentName}
                                         // onChange={handleInputChange}
                                     >
@@ -77,6 +77,43 @@ function Results() {
                             <input type="submit" value="Submit" id="result-submit-btn" />
                         </form>
                     </div>
+                </div>
+            </section>
+            <section className="results-table" id="results-table">
+                <div className="results-table-nav">
+                    <div>
+                        <h1>List of results</h1>
+                    </div>
+                    <div>
+                        <button>
+                            <i className="fa-solid fa-sort"></i>
+                        </button>
+                    </div>
+                </div>
+                <div className="results-table-container">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Student</th>
+                            <th>Score</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {/*/!*{results && results.length > 0 ? (*!/*/}
+                        {/*/!*    results.map((result) => (*!/*/}
+                        {/*/!*        <tr key={result.result_id}>*!/*/}
+                        {/*/!*            <td>{result.cname}</td>*!/*/}
+                        {/*/!*            <td>{result.code}</td>*!/*/}
+                        {/*/!*        </tr>*!/*/}
+                        {/*/!*    ))*!/*/}
+                        {/*/!*) : (*!/*/}
+                        {/*    <tr>*/}
+                        {/*        <td colSpan="3">No results available</td>*/}
+                        {/*    </tr>*/}
+                        {/*)}*/}
+                        </tbody>
+                    </table>
                 </div>
             </section>
         </main>
