@@ -2,8 +2,18 @@ const express = require('express');
 const { Pool } = require('pg');
 require('dotenv').config();
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+// Allowing all port origins for development
+app.use(cors({
+    origin: '*'
+}));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const port = 3001;
 
 const pool = new Pool({
@@ -13,15 +23,8 @@ const pool = new Pool({
     },
 });
 
-const corsOptions = {
-    origin: ['http://localhost:3001', 'http://localhost:3000', 'https://merit.onrender.com/'],
-    optionsSuccessStatus: 200,
-};
-
-app.use(cors(corsOptions));
-
-
-app.get('/students/data', async (req, res) => {
+// Getting student data
+app.get('/data/student-data', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM students');
         res.json(result.rows);
@@ -31,6 +34,24 @@ app.get('/students/data', async (req, res) => {
     }
 });
 
+// Adding student data
+app.post('/data/student-data', async (req, res) => {
+    const { fname, lname, dob } = req.body;
+
+    try {
+        const result = await pool.query(
+            'INSERT INTO students (fname, lname, dob) VALUES ($1, $2, $3) RETURNING *',
+            [fname, lname, dob]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Output server port to console
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

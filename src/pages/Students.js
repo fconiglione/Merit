@@ -2,29 +2,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Home() {
-    function validateDOB(event) {
-        const dob = new Date(document.getElementById('dob').value);
-        const today = new Date();
-        let age = today.getFullYear() - dob.getFullYear();
-        const m = today.getMonth() - dob.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
-            age--;
-        }
-        if (isNaN(age)) {
-            alert("Please enter a valid date.");
-            event.preventDefault();
-        } else if (age < 10) {
-            alert("Student must be at least 10 years old.");
-            event.preventDefault();
-        }
-    }
-
     const [students, setStudents] = useState([]);
+    const [formData, setFormData] = useState({
+        fname: '',
+        lname: '',
+        dob: '',
+    });
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/students/data')
+                const response = await axios.get('http://localhost:3001/data/student-data');
                 setStudents(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error.message);
@@ -33,6 +21,31 @@ function Home() {
 
         fetchData();
     }, []);
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post('http://localhost:3001/data/student-data', formData);
+            // Fetch the new data once submitted
+            const response = await axios.get('http://localhost:3001/data/student-data');
+            setStudents(response.data);
+            setFormData({
+                fname: '',
+                lname: '',
+                dob: '',
+            });
+        } catch (error) {
+            console.error('Error submitting data:', error.message);
+        }
+    };
 
     return (
         <main>
@@ -50,19 +63,40 @@ function Home() {
                 </div>
                 <div className="add-students-form">
                     <div className="add-students-form-container">
-                        <form action="/" id="student-form" onSubmit={validateDOB}>
+                        <form action="/data/student-data" id="student-form" onSubmit={handleSubmit}>
                             <div className="student-form-content">
                                 <fieldset>
                                     <label htmlFor="fname">First name</label>
-                                    <input required type="text" id="fname" name="fname" />
+                                    <input
+                                        required
+                                        type="text"
+                                        id="fname"
+                                        name="fname"
+                                        value={formData.fname}
+                                        onChange={handleInputChange}
+                                    />
                                 </fieldset>
                                 <fieldset>
                                     <label htmlFor="lname">Last name</label>
-                                    <input required type="text" id="lname" name="lname" />
+                                    <input
+                                        required
+                                        type="text"
+                                        id="lname"
+                                        name="lname"
+                                        value={formData.lname}
+                                        onChange={handleInputChange}
+                                    />
                                 </fieldset>
                                 <fieldset>
                                     <label htmlFor="dob">Date of birth</label>
-                                    <input required type="date" id="dob" name="dob" />
+                                    <input
+                                        required
+                                        type="date"
+                                        id="dob"
+                                        name="dob"
+                                        value={formData.dob}
+                                        onChange={handleInputChange}
+                                    />
                                 </fieldset>
                             </div>
                             <input type="submit" value="Submit" id="student-submit-btn" />
