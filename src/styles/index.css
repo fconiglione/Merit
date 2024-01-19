@@ -124,6 +124,12 @@
     justify-content: space-between;
     gap: 30px;
 }
+@media screen and (max-width: 985px) {
+    .student-form-content {
+        flex-direction: column;
+        justify-content: unset;
+    }
+}
 .student-form-content fieldset input:focus, .student-form-content form fieldset textarea:focus {
     outline: none;
 }
