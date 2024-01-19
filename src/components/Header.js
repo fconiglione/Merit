@@ -91,7 +91,7 @@ function Header() {
                 </div>
             </div>
             <div className="header-sidebar">
-                <div className="header-sidebar-container" id="sidebar">
+                <div className="header-sidebar-container inactive" id="sidebar">
                     <div className="sidebar-main">
                         <div className="sidebar-top">
                             <div>

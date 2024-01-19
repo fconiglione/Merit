@@ -1,7 +1,18 @@
-html {
+.header, body {
   background-color: #ef233c;
 }
 h1, h2, h3, h4, h5, h6, p, a, li {
   color: #f4f4f4;
   font-family: "Inter", sans-serif;
+}
+main {
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+section {
+  padding: 1% 3%;
 }

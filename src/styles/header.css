@@ -1,8 +1,8 @@
 /* Header */
 
-/*.header {*/
-/*    background-color: #ef233c;*/
-/*}*/
+.header {
+    background-color: #f3596c;
+}
 .header-logo {
     width: 50px;
     height: auto;
@@ -85,6 +85,15 @@
 }
 .sidebar-top {
     padding-top: 5%;
+}
+.sidebar-middle hr {
+    border-top: 1px solid #eeeeee;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    height: 1px;
+    width: 100%;
+    margin: 20px 0;
 }
 .sidebar-top div {
     display: flex;
