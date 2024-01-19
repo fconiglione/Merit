@@ -79,11 +79,11 @@ app.post('/data/course-data', async (req, res) => {
     }
 });
 
-// Getting results data
-app.get('/data/result-data', async (req, res) => {
+// Getting scores data
+app.get('/data/score-data', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM results');
-        res.json(result.rows);
+        const score = await pool.query('SELECT * FROM scores');
+        res.json(score.rows);
     } catch (error) {
         console.error('Error executing query', error);
         res.status(500).send('Internal Server Error');

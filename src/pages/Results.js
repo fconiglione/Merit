@@ -7,7 +7,7 @@ function Results() {
 
     const [students, setStudents] = useState([]);
     const [courses, setCourses] = useState([]);
-    const [results, setResults] = useState([]);
+    const [scores, setScores] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -16,8 +16,8 @@ function Results() {
                 setStudents(studentsResponse.data);
                 const coursesResponse = await axios.get(apiUrl + '/data/course-data');
                 setCourses(coursesResponse.data);
-                const resultsResponse = await axios.get(apiUrl + '/data/result-data');
-                setResults(resultsResponse.data);
+                const scoresResponse = await axios.get(apiUrl + '/data/score-data');
+                setScores(scoresResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error.message);
             }
@@ -91,10 +91,10 @@ function Results() {
                                         // value={formData.studentName}
                                         // onChange={handleInputChange}
                                     >
-                                        <option value="" disabled selected>Select a result</option>
-                                        {results.map((result) => (
-                                            <option key={result.result_id} value={result.result}>
-                                                {result.result}
+                                        <option value="" disabled selected>Select a score</option>
+                                        {scores.map((score) => (
+                                            <option key={score.score_id} value={score.score}>
+                                                {score.score}
                                             </option>
                                         ))}
                                     </select>
