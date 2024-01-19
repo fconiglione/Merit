@@ -72,6 +72,7 @@ function Home() {
                                         type="text"
                                         id="fname"
                                         name="fname"
+                                        placeholder="Enter first name"
                                         value={formData.fname}
                                         onChange={handleInputChange}
                                     />
@@ -83,6 +84,7 @@ function Home() {
                                         type="text"
                                         id="lname"
                                         name="lname"
+                                        placeholder="Enter last name"
                                         value={formData.lname}
                                         onChange={handleInputChange}
                                     />

@@ -193,3 +193,128 @@
 .students-table-container tr:nth-child(odd) {
     background-color: #ef233c;
 }
+
+/* Courses */
+
+.add-courses {
+    background-color: #d80032;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.add-courses-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.view-all-courses-nav a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+}
+.add-courses-nav h1, .add-courses-nav a, .add-courses-nav i {
+    color: #f4f4f4;
+    font-size: 1em;
+}
+#course-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+}
+#course-form fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+#course-form fieldset label {
+    color: #f4f4f4;
+    font-weight: 700;
+}
+#course-form fieldset input {
+    color: #f4f4f4;
+    font-weight: 600;
+    font-size: 1.5em;
+    padding: 10px 15px;
+    background-color: #ef233c;
+    border: none;
+    border-radius: 15px;
+}
+.course-form-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+.course-form-content fieldset input:focus, .course-form-content form fieldset textarea:focus {
+    outline: none;
+}
+#course-submit-btn {
+    background-color: #ef233c;
+    border: none;
+    color: #f4f4f4;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    padding: 15px 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: ease 0.3s linear;
+}
+#course-submit-btn:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    transition: transform 0.3s ease;
+}
+.courses-table {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.courses-table-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.courses-table-nav h1 {
+    font-size: 1em;
+}
+.courses-table-nav button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.courses-table-nav button i {
+    color: #f4f4f4;
+    font-size: 1em;
+}
+.courses-table-container table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1em;
+}
+.courses-table-container th, .courses-table-container td {
+    text-align: left;
+    padding: 8px;
+    font-weight: 500;
+}
+.courses-table-container th {
+    background-color: #d80032;
+    color: #f4f4f4;
+    font-weight: 700;
+}
+.courses-table-container tr:nth-child(even) {
+    background-color: #d80032;
+}
+.courses-table-container tr:nth-child(odd) {
+    background-color: #ef233c;
+}

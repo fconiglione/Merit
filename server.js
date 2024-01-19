@@ -51,6 +51,17 @@ app.post('/data/student-data', async (req, res) => {
     }
 });
 
+// Getting course data
+app.get('/data/course-data', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM courses');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // Output server port to console
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
