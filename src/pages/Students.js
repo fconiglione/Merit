@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Home() {
     function validateDOB(event) {
@@ -17,6 +18,22 @@ function Home() {
             event.preventDefault();
         }
     }
+
+    const [students, setStudents] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/students/data')
+                setStudents(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error.message);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <main>
             <section className="add-students">
@@ -74,16 +91,19 @@ function Home() {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Doe</td>
-                            <td>John</td>
-                            <td>1990-05-15</td>
-                        </tr>
-                        <tr>
-                            <td>Zoe</td>
-                            <td>Zohn</td>
-                            <td>1990-05-15</td>
-                        </tr>
+                        {students && students.length > 0 ? (
+                            students.map((student) => (
+                                <tr key={student.student_id}>
+                                    <td>{student.lname}</td>
+                                    <td>{student.fname}</td>
+                                    <td>{new Date(student.dob).toLocaleDateString()}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="3">No students available</td>
+                            </tr>
+                        )}
                         </tbody>
                     </table>
                 </div>
