@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function Home() {
+    const [enrolledStudents, setEnrolledStudents] = useState(0);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/data/student-data')
+            .then(response => response.json())
+            .then(data => setEnrolledStudents(data.length))
+            .catch(error => console.error('Error fetching student data:', error));
+    }, []);
     return (
         <main>
             <section className="home-navigation">
@@ -11,7 +19,7 @@ function Home() {
                                 <i className="fa-solid fa-users"></i>
                             </div>
                             <div>
-                                <h1>10</h1>
+                                <h1>{enrolledStudents}</h1>
                                 <p>Enrolled Students</p>
                             </div>
                         </div>
