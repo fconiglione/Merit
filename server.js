@@ -51,6 +51,20 @@ app.post('/data/student-data', async (req, res) => {
     }
 });
 
+// Delete course data
+
+app.delete('/data/delete-student/:student_id', async (req, res) => {
+    const student_id = req.params.student_id;
+
+    try {
+        await pool.query('DELETE FROM students WHERE student_id = $1', [student_id]);
+        res.status(200).json({ message: 'Student deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting student:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // Getting course data
 app.get('/data/course-data', async (req, res) => {
     try {
@@ -75,6 +89,20 @@ app.post('/data/course-data', async (req, res) => {
         res.status(201).json(result.rows[0]);
     } catch (error) {
         console.error('Error executing query', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Delete course data
+
+app.delete('/data/delete-course/:course_id', async (req, res) => {
+    const course_id = req.params.course_id;
+
+    try {
+        await pool.query('DELETE FROM courses WHERE course_id = $1', [course_id]);
+        res.status(200).json({ message: 'Course deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting course:', error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -144,6 +172,19 @@ app.get('/data/result-data', async (req, res) => {
     }
 });
 
+// Delete result data
+
+app.delete('/data/delete-result/:result_id', async (req, res) => {
+    const result_id = req.params.result_id;
+
+    try {
+        await pool.query('DELETE FROM results WHERE result_id = $1', [result_id]);
+        res.status(200).json({ message: 'Result deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting result:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 // Output server port to console
 app.listen(port, () => {

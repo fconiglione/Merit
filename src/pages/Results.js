@@ -58,6 +58,22 @@ function Results() {
         }
     };
 
+    const confirmDelete = async (result_id) => {
+        const confirmDeletion = window.confirm("Are you sure you want to delete this result?");
+
+        if (confirmDeletion) {
+            try {
+                await axios.delete(apiUrl + '/data/delete-result/' + result_id);
+
+                // Fetch the newly updated data once deleted
+                const response = await axios.get(apiUrl + '/data/result-data');
+                setResults(response.data);
+            } catch (error) {
+                console.error("Error deleting result:", error.message);
+            }
+        }
+    };
+
     return (
         <main>
             <section className="add-results">
@@ -155,6 +171,7 @@ function Results() {
                             <th>Course</th>
                             <th>Student</th>
                             <th>Score</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -164,6 +181,15 @@ function Results() {
                                     <td>{result.course_name}</td>
                                     <td>{result.student_name}</td>
                                     <td>{result.score}</td>
+                                    <td>
+                                        <a
+                                            href="javascript:void(0)"
+                                            title="Delete"
+                                            onClick={() => confirmDelete(result.result_id)}
+                                        >
+                                            <i className="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             ))
                         ) : (

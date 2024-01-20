@@ -50,6 +50,22 @@ function Courses() {
         }
     };
 
+    const confirmDelete = async (course_id) => {
+        const confirmDeletion = window.confirm("Are you sure you want to delete this course?");
+
+        if (confirmDeletion) {
+            try {
+                await axios.delete(apiUrl + '/data/delete-course/' + course_id);
+
+                // Fetch the newly updated data once deleted
+                const response = await axios.get(apiUrl + '/data/course-data');
+                setCourses(response.data);
+            } catch (error) {
+                console.error("Error deleting course:", error.message);
+            }
+        }
+    };
+
     return (
         <main>
             <section className="add-courses">
@@ -115,6 +131,7 @@ function Courses() {
                         <tr>
                             <th>Course name</th>
                             <th>Course Code</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -123,6 +140,15 @@ function Courses() {
                                 <tr key={course.course_id}>
                                     <td>{course.cname}</td>
                                     <td>{course.code}</td>
+                                    <td>
+                                        <a
+                                            href="javascript:void(0)"
+                                            title="Delete"
+                                            onClick={() => confirmDelete(course.course_id)}
+                                        >
+                                            <i className="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             ))
                         ) : (
