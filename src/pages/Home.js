@@ -6,6 +6,7 @@ function Home() {
 
     const [enrolledStudents, setEnrolledStudents] = useState(0);
     const [listedCourses, setListedCourses] = useState(0);
+    const [resultsPublished, setResultsPublished] = useState(0);
 
     useEffect(() => {
         fetch(apiUrl + '/data/student-data')
@@ -16,6 +17,10 @@ function Home() {
         fetch(apiUrl + '/data/course-data')
             .then(response => response.json())
             .then(data => setListedCourses(data.length))
+            .catch(error => console.error('Error fetching course data:', error));
+        fetch(apiUrl + '/data/result-data')
+            .then(response => response.json())
+            .then(data => setResultsPublished(data.length))
             .catch(error => console.error('Error fetching course data:', error));
     }, []);
     return (
@@ -50,7 +55,7 @@ function Home() {
                                 <i className="fa-solid fa-graduation-cap"></i>
                             </div>
                             <div>
-                                <h1>7</h1>
+                                <h1>{resultsPublished}</h1>
                                 <p>Results Published</p>
                             </div>
                         </div>
