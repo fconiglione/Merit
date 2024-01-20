@@ -8,6 +8,11 @@ function Results() {
     const [students, setStudents] = useState([]);
     const [courses, setCourses] = useState([]);
     const [scores, setScores] = useState([]);
+    const [results, setResults] = useState([]);
+
+    const [studentName, setStudentName] = useState("");
+    const [cname, setCname] = useState("");
+    const [score, setScore] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,15 +23,40 @@ function Results() {
                 setCourses(coursesResponse.data);
                 const scoresResponse = await axios.get(apiUrl + '/data/score-data');
                 setScores(scoresResponse.data);
+                const resultsResponse = await axios.get(apiUrl + "/data/result-data");
+                setResults(resultsResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error.message);
             }
-
-            fetchData();
         };
 
         fetchData();
     }, []);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        try {
+            const formData = {
+                studentName,
+                cname,
+                score,
+            };
+
+            await axios.post(apiUrl + '/data/result-data', formData);
+
+            alert('Result added successfully');
+            // Fetch the new data once submitted
+            const response = await axios.get(apiUrl + '/data/result-data');
+            setResults(response.data);
+
+            setStudentName("");
+            setCname("");
+            setScore("");
+        } catch (error) {
+            console.error('Error submitting data:', error.message);
+        }
+    };
 
     return (
         <main>
@@ -44,9 +74,11 @@ function Results() {
                 </div>
                 <div className="add-results-form">
                     <div className="add-results-form-container">
-                        <form action="/data/result-data" id="result-form"
-                              //onSubmit={handleSubmit}
-                            >
+                        <form
+                            action="/data/result-data"
+                            id="result-form"
+                            onSubmit={handleSubmit}
+                        >
                             <div className="result-form-content">
                                 <fieldset>
                                     <label htmlFor="studentName">Student name</label>
@@ -54,8 +86,8 @@ function Results() {
                                         required
                                         id="studentName"
                                         name="studentName"
-                                        // value={formData.studentName}
-                                        // onChange={handleInputChange}
+                                        value={studentName}
+                                        onChange={(e) => setStudentName(e.target.value)}
                                     >
                                         <option value="" disabled selected>Select a student</option>
                                         {students.map((student) => (
@@ -71,8 +103,8 @@ function Results() {
                                         required
                                         id="cname"
                                         name="cname"
-                                        // value={formData.cname}
-                                        // onChange={handleInputChange}
+                                        value={cname}
+                                        onChange={(e) => setCname(e.target.value)}
                                     >
                                         <option value="" disabled selected>Select a course</option>
                                         {courses.map((course) => (
@@ -88,8 +120,8 @@ function Results() {
                                         required
                                         id="score"
                                         name="score"
-                                        // value={formData.studentName}
-                                        // onChange={handleInputChange}
+                                        value={score}
+                                        onChange={(e) => setScore(e.target.value)}
                                     >
                                         <option value="" disabled selected>Select a score</option>
                                         {scores.map((score) => (
@@ -126,18 +158,19 @@ function Results() {
                         </tr>
                         </thead>
                         <tbody>
-                        {/*/!*{results && results.length > 0 ? (*!/*/}
-                        {/*/!*    results.map((result) => (*!/*/}
-                        {/*/!*        <tr key={result.result_id}>*!/*/}
-                        {/*/!*            <td>{result.cname}</td>*!/*/}
-                        {/*/!*            <td>{result.code}</td>*!/*/}
-                        {/*/!*        </tr>*!/*/}
-                        {/*/!*    ))*!/*/}
-                        {/*/!*) : (*!/*/}
-                        {/*    <tr>*/}
-                        {/*        <td colSpan="3">No results available</td>*/}
-                        {/*    </tr>*/}
-                        {/*)}*/}
+                        {results && results.length > 0 ? (
+                            results.map((result) => (
+                                <tr key={result.result_id}>
+                                    <td>{result.course_name}</td>
+                                    <td>{result.student_name}</td>
+                                    <td>{result.score}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="3">No results available</td>
+                            </tr>
+                        )}
                         </tbody>
                     </table>
                 </div>

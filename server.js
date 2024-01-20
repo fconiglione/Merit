@@ -127,6 +127,23 @@ app.post('/data/result-data', async (req, res) => {
     }
 });
 
+// Getting results data
+app.get('/data/result-data', async (req, res) => {
+    try {
+        const result = await pool.query(
+            'SELECT results.*, scores.score, courses.cname AS course_name, courses.code AS course_code, CONCAT(students.fname, \' \', students.lname) AS student_name ' +
+            'FROM results ' +
+            'JOIN scores ON results.score_id = scores.score_id ' +
+            'JOIN courses ON results.course_id = courses.course_id ' +
+            'JOIN students ON results.student_id = students.student_id'
+        );
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 // Output server port to console
 app.listen(port, () => {
