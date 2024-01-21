@@ -1,34 +1,41 @@
 import React, { useState, useEffect } from "react";
+// Importing useParams for routing to the correct course_id
 import { useParams } from 'react-router-dom';
+// Importing axios for HTTP requests and JSON data
 import axios from "axios";
 
+/*
+The EditCourse component allows the user to edit and update the selected
+course from the table list in the /courses page.
+*/
 function EditCourse() {
+    // Creating variables for the server port of 3001
     const port = 3001;
     const apiUrl = `http://${window.location.hostname}:${port}`;
 
-    // Getting the course_id for the url
+    // Getting the course_id for the url using useParams import
     const { course_id } = useParams();
 
+    // Setting the initial state of the form data
     const [formData, setFormData] = useState({
         cname: "",
         code: "",
     });
 
     useEffect(() => {
+        // Getting access to the course data using the selected
+        // course_id
         const fetchCourse = async () => {
-            try {
-                const response = await axios.get(
-                    apiUrl + '/data/courses/' + course_id
-                );
-                setFormData(response.data);
-            } catch (error) {
-                console.error("Error fetching course data:", error.message);
-            }
+            const response = await axios.get(
+                apiUrl + '/data/courses/' + course_id
+            );
+            setFormData(response.data);
         };
 
         fetchCourse();
     }, [course_id]);
 
+    // Updating the changes in data
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -37,6 +44,7 @@ function EditCourse() {
         }));
     };
 
+    // Submitting the newly updated course entry with a try/catch block for any errors
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -55,7 +63,7 @@ function EditCourse() {
 
     return (
         <main>
-            {/* Reusing class names from parent component to save time and css space */}
+            {/* Reusing class names from parent component to save time and css code space */}
             <section className="add-courses">
                 <div className="update-courses-nav">
                     <a href="/courses">

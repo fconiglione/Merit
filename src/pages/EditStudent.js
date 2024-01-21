@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
+// Importing useParams for routing to the correct student_id
 import { useParams } from 'react-router-dom';
+// Importing axios for HTTP requests and JSON data
 import axios from "axios";
 
+/*
+The EditStudent component allows the user to edit and update the selected
+student from the table list in the /results page.
+*/
 function EditStudent() {
+    // Creating variables for the server port of 3001
     const port = 3001;
     const apiUrl = `http://${window.location.hostname}:${port}`;
 
     // Getting the student_id for the url
     const { student_id } = useParams();
 
+    // Setting the initial state of the form data
     const [formData, setFormData] = useState({
         fname: "",
         lname: "",
@@ -16,26 +24,26 @@ function EditStudent() {
     });
 
     useEffect(() => {
+        // Getting access to the student data using the selected
+        // student_id
         const fetchStudent = async () => {
-            try {
-                const response = await axios.get(
-                    apiUrl + '/data/students/' + student_id
-                );
-                // Creating a new date object so that the dob matches the form requirements
-                const formattedDob = new Date(response.data.dob).toISOString().split('T')[0];
-                setFormData({
-                    fname: response.data.fname,
-                    lname: response.data.lname,
-                    dob: formattedDob,
-                });
-            } catch (error) {
-                console.error("Error fetching student data:", error.message);
-            }
+            const response = await axios.get(
+                apiUrl + '/data/students/' + student_id
+            );
+            // Creating a new date object so that the dob matches the form requirements
+            const formattedDob = new Date(response.data.dob).toISOString().split('T')[0];
+            // Populating the form with the selected student_id data
+            setFormData({
+                fname: response.data.fname,
+                lname: response.data.lname,
+                dob: formattedDob,
+            });
         };
 
         fetchStudent();
     }, [student_id]);
 
+    // Updating the changes in data
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -44,6 +52,7 @@ function EditStudent() {
         }));
     };
 
+    // Submitting the newly updated student entry with a try/catch block for any errors
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {

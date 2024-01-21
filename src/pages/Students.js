@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
+// Importing axios for HTTP requests and JSON data
 import axios from 'axios';
 
+/*
+The Students component allows the user to add students to the list and view
+a list of existing students. The user can also edit and delete any existing
+students by clicking on the action buttons directly in the table.
+*/
 function Home() {
+    // Creating variables for the server port of 3001
     const port = 3001;
     const apiUrl = `http://${window.location.hostname}:${port}`;
 
+    // Setting a useState variable for students
     const [students, setStudents] = useState([]);
+    // Populating default form data
     const [formData, setFormData] = useState({
         fname: '',
         lname: '',
@@ -13,18 +22,16 @@ function Home() {
     });
 
     useEffect(() => {
+        // Fetching the students data from the api url
         const fetchData = async () => {
-            try {
-                const response = await axios.get(apiUrl + '/data/student-data');
-                setStudents(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error.message);
-            }
+            const response = await axios.get(apiUrl + '/data/student-data');
+            setStudents(response.data);
         };
 
         fetchData();
     }, []);
 
+    // Updating the changes in data
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -33,15 +40,19 @@ function Home() {
         }));
     };
 
+    // Submitting the new student entry with a try/catch block for errors
     const handleSubmit = async (event) => {
+        // Removing the default form submission
         event.preventDefault();
         try {
+            // Posting the data
             await axios.post(apiUrl + '/data/student-data', formData);
             // Add a notification
             alert('Student added successfully!');
             // Fetch the new data once submitted
             const response = await axios.get(apiUrl + '/data/student-data');
             setStudents(response.data);
+            // Resetting form data to be empty upon submission
             setFormData({
                 fname: '',
                 lname: '',
@@ -52,11 +63,13 @@ function Home() {
         }
     };
 
+    // Confirming deletion and removing the student entry upon request
     const confirmDelete = async (student_id) => {
         const confirmDeletion = window.confirm("Are you sure you want to delete this student?");
 
         if (confirmDeletion) {
             try {
+                // Deleting the entry
                 await axios.delete(apiUrl + '/data/delete-student/' + student_id);
 
                 // Fetch the newly updated data once deleted
@@ -149,6 +162,8 @@ function Home() {
                         </tr>
                         </thead>
                         <tbody>
+                        {/* Looping through the student entries and displaying
+                        as rows in the table */}
                         {students && students.length > 0 ? (
                             students.map((student) => (
                                 <tr key={student.student_id}>
@@ -173,6 +188,7 @@ function Home() {
                                 </tr>
                             ))
                         ) : (
+                            // Displaying a message if no data exists
                             <tr>
                                 <td colSpan="3">No students available</td>
                             </tr>

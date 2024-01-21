@@ -1,9 +1,10 @@
-const express = require('express');
-const { Pool } = require('pg');
-require('dotenv').config();
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const express = require('express'); // Importing the express framework
+const { Pool } = require('pg'); // Importing pool from PostgreSQL
+require('dotenv').config(); // Getting the environment variables
+const cors = require('cors'); // Importing cors to allow different ports
+const bodyParser = require('body-parser'); // Importing body parser for get/post methods
 
+// Creating an express app instance
 const app = express();
 
 // Allowing all port origins for development
@@ -11,11 +12,14 @@ app.use(cors({
     origin: '*'
 }));
 
+// Allowing body parser to parse incoming HTTP request bodies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Setting the server port to 3001
 const port = 3001;
 
+// Adding the PostgreSQL connection using the environment variable 'POSTGRE_URL'
 const pool = new Pool({
     connectionString: process.env.POSTGRES_URL,
     ssl: {
@@ -23,7 +27,7 @@ const pool = new Pool({
     },
 });
 
-// Getting student data
+// Getting student data with a try/catch block for errors
 app.get('/data/student-data', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM students');
@@ -34,7 +38,7 @@ app.get('/data/student-data', async (req, res) => {
     }
 });
 
-// Adding student data
+// Adding student data with a try/catch block for errors
 app.post('/data/student-data', async (req, res) => {
     const { fname, lname, dob } = req.body;
 
@@ -51,7 +55,7 @@ app.post('/data/student-data', async (req, res) => {
     }
 });
 
-// Getting student data for editing
+// Getting student data for editing with a try/catch block for errors
 
 app.get('/data/students/:student_id', async (req, res) => {
     const student_id = req.params.student_id;
@@ -69,7 +73,7 @@ app.get('/data/students/:student_id', async (req, res) => {
     }
 });
 
-// Update student data
+// Update student data with a try/catch block for errors
 app.put('/data/update-student/:student_id', async (req, res) => {
     const student_id = req.params.student_id;
     const { fname, lname, dob } = req.body;
@@ -84,7 +88,7 @@ app.put('/data/update-student/:student_id', async (req, res) => {
     }
 });
 
-// Delete course data
+// Delete course data with a try/catch block for errors
 
 app.delete('/data/delete-student/:student_id', async (req, res) => {
     const student_id = req.params.student_id;
@@ -98,7 +102,7 @@ app.delete('/data/delete-student/:student_id', async (req, res) => {
     }
 });
 
-// Getting course data
+// Getting course data with a try/catch block for errors
 app.get('/data/course-data', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM courses');
@@ -109,7 +113,7 @@ app.get('/data/course-data', async (req, res) => {
     }
 });
 
-// Adding course data
+// Adding course data with a try/catch block for errors
 app.post('/data/course-data', async (req, res) => {
     const { cname, code } = req.body;
 
@@ -126,7 +130,7 @@ app.post('/data/course-data', async (req, res) => {
     }
 });
 
-// Delete course data
+// Delete course data with a try/catch block for errors
 
 app.delete('/data/delete-course/:course_id', async (req, res) => {
     const course_id = req.params.course_id;
@@ -140,7 +144,7 @@ app.delete('/data/delete-course/:course_id', async (req, res) => {
     }
 });
 
-// Getting course data for editing
+// Getting course data for editing with a try/catch block for errors
 
 app.get('/data/courses/:course_id', async (req, res) => {
     const course_id = req.params.course_id;
@@ -158,7 +162,7 @@ app.get('/data/courses/:course_id', async (req, res) => {
     }
 });
 
-// Update course data
+// Update course data with a try/catch block for errors
 app.put('/data/update-course/:course_id', async (req, res) => {
     const course_id = req.params.course_id;
     const { cname, code } = req.body;
@@ -173,7 +177,7 @@ app.put('/data/update-course/:course_id', async (req, res) => {
     }
 });
 
-// Getting scores data
+// Getting scores data with a try/catch block for errors
 app.get('/data/score-data', async (req, res) => {
     try {
         const score = await pool.query('SELECT * FROM scores');
@@ -184,7 +188,7 @@ app.get('/data/score-data', async (req, res) => {
     }
 });
 
-// Adding results data
+// Adding results data with a try/catch block for errors
 
 app.post('/data/result-data', async (req, res) => {
     const { studentName, cname, score } = req.body;
@@ -221,7 +225,7 @@ app.post('/data/result-data', async (req, res) => {
     }
 });
 
-// Getting results data
+// Getting results data with a try/catch block for errors
 app.get('/data/result-data', async (req, res) => {
     try {
         const result = await pool.query(
@@ -238,7 +242,7 @@ app.get('/data/result-data', async (req, res) => {
     }
 });
 
-// Delete result data
+// Delete result data with a try/catch block for errors
 
 app.delete('/data/delete-result/:result_id', async (req, res) => {
     const result_id = req.params.result_id;
@@ -252,7 +256,7 @@ app.delete('/data/delete-result/:result_id', async (req, res) => {
     }
 });
 
-// Getting results data for editing
+// Getting results data for editing with a try/catch block for errors
 app.get('/data/results/:result_id', async (req, res) => {
     const result_id = req.params.result_id;
 
@@ -273,7 +277,7 @@ app.get('/data/results/:result_id', async (req, res) => {
     }
 });
 
-// Updating result data
+// Updating result data with a try/catch block for errors
 app.put('/data/update-result/:result_id', async (req, res) => {
     const result_id = req.params.result_id;
     const { score_id } = req.body;
@@ -288,7 +292,7 @@ app.put('/data/update-result/:result_id', async (req, res) => {
     }
 });
 
-// Output server port to console
+// Output server port to console when server begins
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

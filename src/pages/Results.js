@@ -1,10 +1,18 @@
 import React, {useEffect, useState} from "react";
+// Importing axios for HTTP requests and JSON data
 import axios from "axios";
 
+/*
+The Results component allows the user to add results to the list and view
+a list of existing results. The user can also edit and delete any existing
+results by clicking on the action buttons directly in the table.
+*/
 function Results() {
+    // Creating variables for the server port of 3001
     const port = 3001;
     const apiUrl = `http://${window.location.hostname}:${port}`;
 
+    // Setting useState variables to store data for the results page
     const [students, setStudents] = useState([]);
     const [courses, setCourses] = useState([]);
     const [scores, setScores] = useState([]);
@@ -16,40 +24,44 @@ function Results() {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const studentsResponse = await axios.get(apiUrl + '/data/student-data');
-                setStudents(studentsResponse.data);
-                const coursesResponse = await axios.get(apiUrl + '/data/course-data');
-                setCourses(coursesResponse.data);
-                const scoresResponse = await axios.get(apiUrl + '/data/score-data');
-                setScores(scoresResponse.data);
-                const resultsResponse = await axios.get(apiUrl + "/data/result-data");
-                setResults(resultsResponse.data);
-            } catch (error) {
-                console.error('Error fetching data:', error.message);
-            }
+            // Fetching the existing student data from the api url
+            const studentsResponse = await axios.get(apiUrl + '/data/student-data');
+            setStudents(studentsResponse.data);
+            // Fetching the existing course data from the api url
+            const coursesResponse = await axios.get(apiUrl + '/data/course-data');
+            setCourses(coursesResponse.data);
+            // Fetching the existing scores data from the api url
+            const scoresResponse = await axios.get(apiUrl + '/data/score-data');
+            setScores(scoresResponse.data);
+            // Fetching the results data from the api url
+            const resultsResponse = await axios.get(apiUrl + "/data/result-data");
+            setResults(resultsResponse.data);
         };
 
         fetchData();
     }, []);
 
+    // Updating the changes in data
     const handleSubmit = async (event) => {
+        // Removing the default form submission
         event.preventDefault();
 
         try {
+            // Creating the formData object from the new input
             const formData = {
                 studentName,
                 cname,
                 score,
             };
 
+            // Posting the data
             await axios.post(apiUrl + '/data/result-data', formData);
-
+            // Adding a notification
             alert('Result added successfully');
             // Fetch the new data once submitted
             const response = await axios.get(apiUrl + '/data/result-data');
             setResults(response.data);
-
+            // Resetting form data to be empty upon submission
             setStudentName("");
             setCname("");
             setScore("");
@@ -58,11 +70,13 @@ function Results() {
         }
     };
 
+    // Confirming deletion and removing the result entry upon request
     const confirmDelete = async (result_id) => {
         const confirmDeletion = window.confirm("Are you sure you want to delete this result?");
 
         if (confirmDeletion) {
             try {
+                // Deleting the entry
                 await axios.delete(apiUrl + '/data/delete-result/' + result_id);
 
                 // Fetch the newly updated data once deleted
@@ -175,6 +189,8 @@ function Results() {
                         </tr>
                         </thead>
                         <tbody>
+                        {/* Looping through the result entries and displaying
+                        as rows in the table */}
                         {results && results.length > 0 ? (
                             results.map((result) => (
                                 <tr key={result.result_id}>
@@ -199,6 +215,7 @@ function Results() {
                                 </tr>
                             ))
                         ) : (
+                            // Displaying a message if no data exists
                             <tr>
                                 <td colSpan="3">No results available</td>
                             </tr>

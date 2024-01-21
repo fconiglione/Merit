@@ -1,47 +1,61 @@
 import React from "react";
+// Importing header.css
 import "../styles/header.css";
+// Importing images from ../assets
 import MeritLogo1 from "../assets/merit-logo-1.svg";
 import ProfilePicturePlaceholder from "../assets/pfp-placeholder.jpg";
 
 function Header() {
+    // Function to open the sidebar
     function open_sidebar() {
+        // Assigning object variables
         const sidebar = document.getElementById("sidebar");
         const overlay = document.getElementById("overlay");
 
+        // Activating the sidebar
         sidebar.style.display = "flex";
         sidebar.classList.remove("inactive");
         sidebar.classList.add("active");
         document.getElementById("overlay").style.display = "block";
 
+        // Activating the overlay
         overlay.style.display = "block";
         overlay.addEventListener("click", close_sidebar);
         document.body.style.overflow = "hidden";
 
+        // Forcing the user to be at the top of the screen
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
     }
-
+    // Function to close the sidebar
     function close_sidebar() {
+        // Assigning object variables
         const sidebar = document.getElementById("sidebar");
         const overlay = document.getElementById("overlay");
 
+        // Deactivating the sidebar
         sidebar.classList.remove("active");
         sidebar.classList.add("inactive");
         document.getElementById("overlay").style.display = "none";
 
+        // Disabling the overlay
         overlay.style.display = "none";
         overlay.removeEventListener("click", close_sidebar);
         document.body.style.overflow = "auto";
 
+        // Forcing the user to be at the top of the screen
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
     }
 
+    // Dynamically getting the current year and updating it in the copyright
+    // section of the sidebar footer
     const currentYear = new Date().getFullYear();
+
     return (
         <div className="header">
             <div className="header-container">

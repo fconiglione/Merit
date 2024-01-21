@@ -1,29 +1,36 @@
 import React, {useEffect, useState} from "react";
+// Importing axios for HTTP requests and JSON data
 import axios from "axios";
 
+/*
+The Courses component allows the user to add courses to the list and view
+a list of existing courses. The user can also edit and delete any existing
+courses by clicking on the action buttons directly in the table.
+*/
 function Courses() {
+    // Creating variables for the server port of 3001
     const port = 3001;
     const apiUrl = `http://${window.location.hostname}:${port}`;
 
+    // Setting a useState variable for courses
     const [courses, setCourses] = useState([]);
+    // Populating default form data
     const [formData, setFormData] = useState({
         cname: '',
         code: '',
     });
 
     useEffect(() => {
+        // Fetching the course data from the api url
         const fetchData = async () => {
-            try {
-                const response = await axios.get(apiUrl + '/data/course-data');
-                setCourses(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error.message);
-            }
+            const response = await axios.get(apiUrl + '/data/course-data');
+            setCourses(response.data);
         };
 
         fetchData();
     }, []);
 
+    // Updating the changes in data
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -32,15 +39,19 @@ function Courses() {
         }));
     };
 
+    // Submitting the new course entry with a try/catch block for errors
     const handleSubmit = async (event) => {
+        // Removing the default form submission
         event.preventDefault();
         try {
+            // Posting the data
             await axios.post(apiUrl + '/data/course-data', formData);
             // Add a notification
             alert('Course added successfully!');
             // Fetch the new data once submitted
             const response = await axios.get(apiUrl + '/data/course-data');
             setCourses(response.data);
+            // Resetting form data to be empty upon submission
             setFormData({
                 cname: '',
                 code: '',
@@ -50,11 +61,13 @@ function Courses() {
         }
     };
 
+    // Confirming deletion and removing the course entry upon request
     const confirmDelete = async (course_id) => {
         const confirmDeletion = window.confirm("Are you sure you want to delete this course?");
 
         if (confirmDeletion) {
             try {
+                // Deleting the entry
                 await axios.delete(apiUrl + '/data/delete-course/' + course_id);
 
                 // Fetch the newly updated data once deleted
@@ -135,6 +148,8 @@ function Courses() {
                         </tr>
                         </thead>
                         <tbody>
+                        {/* Looping through the course entries and displaying
+                        as rows in the table */}
                         {courses && courses.length > 0 ? (
                             courses.map((course) => (
                                 <tr key={course.course_id}>
@@ -158,6 +173,7 @@ function Courses() {
                                 </tr>
                             ))
                         ) : (
+                            // Displaying a message if no data exists
                             <tr>
                                 <td colSpan="3">No courses available</td>
                             </tr>

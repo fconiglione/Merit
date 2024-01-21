@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
+// Importing useParams for routing to the correct result_id
 import { useParams } from 'react-router-dom';
+// Importing axios for HTTP requests and JSON data
 import axios from "axios";
 
+/*
+The EditResult component allows the user to edit and update the selected
+result from the table list in the /results page.
+*/
 function EditResult() {
+    // Creating variables for the server port of 3001
     const port = 3001;
     const apiUrl = `http://${window.location.hostname}:${port}`;
 
     // Getting the result_id for the url
     const { result_id } = useParams();
 
+    // Adding a state variable to scores
     const [scores, setScores] = useState([]);
 
+    // Setting the initial state of the form data
     const [formData, setFormData] = useState({
         studentName: "",
         cname: "",
@@ -18,39 +27,43 @@ function EditResult() {
     });
 
     useEffect(() => {
+        // Getting access to the results data using the selected
+        // result_id
         const fetchData = async () => {
-            try {
-                // Fetch result data
-                const resultResponse = await axios.get(apiUrl + '/data/results/' + result_id);
-                const resultData = resultResponse.data[0];
+            // Getting the result data
+            const resultResponse = await axios.get(apiUrl + '/data/results/' + result_id);
+            const resultData = resultResponse.data[0];
 
-                // Fetch scores
-                const scoresResponse = await axios.get(apiUrl + '/data/score-data');
-                const availableScores = scoresResponse.data;
+            // Getting the scores data
+            const scoresResponse = await axios.get(apiUrl + '/data/score-data');
+            const availableScores = scoresResponse.data;
 
-                setFormData({
-                    studentName: resultData.student_name,
-                    cname: resultData.course_name,
-                    score_id: resultData.score_id,
-                });
+            // Populating the form with the selected result_id data
+            setFormData({
+                studentName: resultData.student_name,
+                cname: resultData.course_name,
+                score_id: resultData.score_id,
+            });
 
-                setScores(availableScores);
-            } catch (error) {
-                console.error("Error fetching data:", error.message);
-            }
+            // Populating the available scores from the db
+            setScores(availableScores);
         };
 
         fetchData();
     }, [result_id]);
 
+    // Updating the changes in data
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 
         if (name === "score") {
+            // Finding the selected score option from the scores array
             const selectedScoreOption = scores.find(
                 (scoreOption) => String(scoreOption.score_id) === value
             );
 
+            // Only updating score_id of the existing data if the selected
+            // option exists
             if (selectedScoreOption) {
                 setFormData((prevData) => ({
                     ...prevData,
@@ -60,7 +73,7 @@ function EditResult() {
                 console.error("Selected score option not found:", value);
             }
         } else {
-            // For other fields, update as usual
+            // Updating other data as normal
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value,
@@ -68,6 +81,7 @@ function EditResult() {
         }
     };
 
+    // Submitting the newly updated result entry with a try/catch block for any errors
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
