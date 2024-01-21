@@ -252,6 +252,42 @@ app.delete('/data/delete-result/:result_id', async (req, res) => {
     }
 });
 
+// Getting results data for editing
+app.get('/data/results/:result_id', async (req, res) => {
+    const result_id = req.params.result_id;
+
+    try {
+        const result = await pool.query(
+            'SELECT results.*, scores.score, courses.cname AS course_name, courses.code AS course_code, CONCAT(students.fname, \' \', students.lname) AS student_name ' +
+            'FROM results ' +
+            'JOIN scores ON results.score_id = scores.score_id ' +
+            'JOIN courses ON results.course_id = courses.course_id ' +
+            'JOIN students ON results.student_id = students.student_id ' +
+            'WHERE results.result_id = $1',
+            [result_id]
+        );
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Updating result data
+app.put('/data/update-result/:result_id', async (req, res) => {
+    const result_id = req.params.result_id;
+    const { score_id } = req.body;
+
+    try {
+        await pool.query('UPDATE results SET score_id = $1 WHERE result_id = $2', [score_id, result_id]);
+
+        res.status(200).json({ message: 'Result updated successfully' });
+    } catch (error) {
+        console.error('Error updating course:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // Output server port to console
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

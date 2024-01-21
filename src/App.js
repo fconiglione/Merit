@@ -10,6 +10,7 @@ import EditStudent from "./pages/EditStudent";
 import Courses from "./pages/Courses";
 import EditCourse from "./pages/EditCourse";
 import Results from "./pages/Results";
+import EditResult from "./pages/EditResult";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/courses" element={<Courses />} />
             <Route path="/data/edit-course/:course_id" element={<EditCourse />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/data/edit-result/:result_id" element={<EditResult />} />
           </Routes>
           <Footer />
         </div>

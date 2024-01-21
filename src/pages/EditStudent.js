@@ -16,7 +16,7 @@ function EditStudent() {
     });
 
     useEffect(() => {
-        const fetchstudent = async () => {
+        const fetchStudent = async () => {
             try {
                 const response = await axios.get(
                     apiUrl + '/data/students/' + student_id
@@ -33,7 +33,7 @@ function EditStudent() {
             }
         };
 
-        fetchstudent();
+        fetchStudent();
     }, [student_id]);
 
     const handleInputChange = (event) => {

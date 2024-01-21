@@ -396,7 +396,22 @@
     padding: 2px 8px;
     border-radius: 15px;
 }
-.add-results-nav h1, .add-results-nav a, .add-results-nav i {
+.update-results-nav a {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 15px;
+    width: fit-content;
+}
+.update-results-nav a:hover {
+    background-color: #ef233c;
+}
+.add-results-nav h1, .add-results-nav a, .add-results-nav i,
+.update-results-nav h1, .update-results-nav a, .update-results-nav i{
     color: #f4f4f4;
     font-size: 1em;
 }
@@ -428,6 +443,16 @@
     border: 1px solid #f68896;
     border-radius: 15px;
     cursor: pointer;
+}
+/* Only necessary for edit page */
+#result-form fieldset input {
+    color: #f4f4f4;
+    font-weight: 600;
+    font-size: 1.5em;
+    padding: 10px 15px;
+    background-color: #f3596c;
+    border: 1px solid #f68896;
+    border-radius: 15px;
 }
 .result-form-content {
     display: flex;

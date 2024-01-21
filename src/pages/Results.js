@@ -168,8 +168,8 @@ function Results() {
                     <table>
                         <thead>
                         <tr>
-                            <th>Course</th>
                             <th>Student</th>
+                            <th>Course</th>
                             <th>Score</th>
                             <th></th>
                         </tr>
@@ -178,11 +178,14 @@ function Results() {
                         {results && results.length > 0 ? (
                             results.map((result) => (
                                 <tr key={result.result_id}>
-                                    <td>{result.course_name}</td>
                                     <td>{result.student_name}</td>
+                                    <td>{result.course_name}</td>
                                     <td>{result.score}</td>
                                     <td className="actions">
-                                        <a href="javascript:void(0)" title="Edit">
+                                        <a
+                                            href={`/data/edit-result/${result.result_id}`}
+                                            title="Edit"
+                                        >
                                             <i className="fa-solid fa-pen-to-square"></i>
                                         </a>
                                         <a
