@@ -140,7 +140,13 @@ function Courses() {
                                 <tr key={course.course_id}>
                                     <td>{course.cname}</td>
                                     <td>{course.code}</td>
-                                    <td>
+                                    <td className="actions">
+                                        <a
+                                            href={`/data/edit-course/${course.course_id}`}
+                                            title="Edit"
+                                        >
+                                            <i className="fa-solid fa-pen-to-square"></i>
+                                        </a>
                                         <a
                                             href="javascript:void(0)"
                                             title="Delete"

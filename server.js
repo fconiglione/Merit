@@ -107,6 +107,39 @@ app.delete('/data/delete-course/:course_id', async (req, res) => {
     }
 });
 
+// Getting course data for editing
+
+app.get('/data/courses/:course_id', async (req, res) => {
+    const course_id = req.params.course_id;
+
+    try {
+        const result = await pool.query('SELECT * FROM courses WHERE course_id = $1', [course_id]);
+        if (result.rows.length === 0) {
+            res.status(404).json({ message: 'Course not found' });
+        } else {
+            res.status(200).json(result.rows[0]);
+        }
+    } catch (error) {
+        console.error('Error fetching course data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Update course data
+app.put('/data/update-course/:course_id', async (req, res) => {
+    const course_id = req.params.course_id;
+    const { cname, code } = req.body;
+
+    try {
+        await pool.query('UPDATE courses SET cname = $1, code = $2 WHERE course_id = $3', [cname, code, course_id]);
+
+        res.status(200).json({ message: 'Course updated successfully' });
+    } catch (error) {
+        console.error('Error updating course:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // Getting scores data
 app.get('/data/score-data', async (req, res) => {
     try {

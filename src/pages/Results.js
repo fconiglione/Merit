@@ -181,7 +181,10 @@ function Results() {
                                     <td>{result.course_name}</td>
                                     <td>{result.student_name}</td>
                                     <td>{result.score}</td>
-                                    <td>
+                                    <td className="actions">
+                                        <a href="javascript:void(0)" title="Edit">
+                                            <i className="fa-solid fa-pen-to-square"></i>
+                                        </a>
                                         <a
                                             href="javascript:void(0)"
                                             title="Delete"

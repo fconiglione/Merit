@@ -1,0 +1,111 @@
+import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
+import axios from "axios";
+
+function EditCourse() {
+    const port = 3001;
+    const apiUrl = `http://${window.location.hostname}:${port}`;
+
+    // Getting the course_id for the url
+    const { course_id } = useParams();
+
+    const [formData, setFormData] = useState({
+        cname: "",
+        code: "",
+    });
+
+    useEffect(() => {
+        const fetchCourse = async () => {
+            try {
+                const response = await axios.get(
+                    apiUrl + '/data/courses/' + course_id
+                );
+                setFormData(response.data);
+            } catch (error) {
+                console.error("Error fetching course data:", error.message);
+            }
+        };
+
+        fetchCourse();
+    }, [course_id]);
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.put(
+                apiUrl + '/data/update-course/' + course_id,
+                formData
+            );
+            // Add a notification
+            alert("Course updated successfully!");
+            // Redirect to the courses page after updating
+        } catch (error) {
+            console.error("Error updating course:", error.message);
+        }
+    };
+
+    return (
+        <main>
+            {/* Reusing class names from parent component to save time and css space */}
+            <section className="add-courses">
+                <div className="update-courses-nav">
+                    <a href="/courses">
+                        <i className="fa-solid fa-arrow-left"></i>
+                        <h1>Return to courses</h1>
+                    </a>
+                </div>
+                <div className="add-courses-form">
+                    <div className="add-courses-form-container">
+                        <form id="course-form" onSubmit={handleSubmit}>
+                            <div className="course-form-content">
+                                <fieldset>
+                                    <label htmlFor="cname">Course name</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="cname"
+                                        name="cname"
+                                        placeholder="Enter course name"
+                                        value={formData.cname}
+                                        onChange={handleInputChange}
+                                    />
+                                </fieldset>
+                                <fieldset>
+                                    <label htmlFor="code">Course code</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="code"
+                                        name="code"
+                                        placeholder="Enter course code"
+                                        value={formData.code}
+                                        onChange={handleInputChange}
+                                    />
+                                </fieldset>
+                            </div>
+                            <input type="submit" value="Update" id="course-submit-btn" />
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <section className="update-disclaimer">
+                <div className="update-disclaimer-wrapper">
+                    <div className="update-disclaimer-content">
+                        <p><i className="fa-solid fa-circle-exclamation"></i> Important Message</p>
+                        <p>Any changes you make on this page will be reflected immediately. Please double-check any edits before saving to ensure accuracy. Note that all edits are permanent and cannot be undone.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
+}
+
+export default EditCourse;
