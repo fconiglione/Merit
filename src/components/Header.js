@@ -55,7 +55,11 @@ function Header() {
                         <div>
                             <a href="/">
                                 <img src={MeritLogo1} alt="Merit header logo" className="header-logo" />
-                                {/*  Source : https://yourteachingmentor.com/january-reboot-workshop/default-profile-picture-avatar-photo-placeholder-vector-illustration/  */}
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/">
+                                <h1>Student Result Management System</h1>
                             </a>
                         </div>
                     </div>
@@ -76,7 +80,7 @@ function Header() {
                                     <i className="fa-solid fa-bell"></i>
                                 </a>
                             </div>
-                            <div>
+                            <div className="final-nav-icon-btn">
                                 <a href="/">
                                     <i className="fa-solid fa-right-from-bracket"></i>
                                 </a>
@@ -84,7 +88,10 @@ function Header() {
                         </div>
                         <div>
                             <div className="profile-picture-div">
-                                <img src={ProfilePicturePlaceholder} alt="Profile picture image"/>
+                                <a href="/">
+                                    <img src={ProfilePicturePlaceholder} alt="Profile picture image"/>
+                                    {/*  Source : https://yourteachingmentor.com/january-reboot-workshop/default-profile-picture-avatar-photo-placeholder-vector-illustration/  */}
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -141,19 +148,19 @@ function Header() {
                             <div className="sidebar-middle-nav">
                                 <ul>
                                     <li>
-                                        <a href="/settings">
+                                        <a href="/">
                                             <i className="fa-solid fa-gear"></i>
                                             <p>Settings</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/help-center">
+                                        <a href="/">
                                             <i className="fa-solid fa-question"></i>
                                             <p>Help Center</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/help-center">
+                                        <a href="/">
                                             <i className="fa-solid fa-right-from-bracket"></i>
                                             <p>Logout</p>
                                         </a>

@@ -39,6 +39,20 @@
     object-fit: cover;
     border-radius: 50%;
 }
+.header-container-nav-item h1 {
+    font-size: 1.2em;
+}
+@media screen and (max-width: 750px) {
+    .header-container-nav-item h1 {
+        display: none;
+    }
+}
+.header-container-nav-item a {
+    text-decoration: none;
+}
+.header-container-nav-icon-btns a:hover i {
+    color: #e3e3e3;
+}
 
 /* Sidebar */
 
@@ -161,6 +175,19 @@
     flex-direction: column;
     gap: 30px;
 }
+.sidebar-main li {
+    border-radius: 15px;
+}
+.sidebar-main li:hover {
+    background-color: #d80032;
+}
+.sidebar-bottom a:hover {
+    text-decoration: underline;
+}
+.final-nav-icon-btn {
+    border-right: 2px solid #f4f4f4;
+    padding-right: 15px;
+}
 
 /* Hamburger */
 
@@ -173,6 +200,11 @@
     cursor: pointer;
     transition: transform 0.3s ease;
     z-index: 9998;
+    padding: 10px;
+    border-radius: 50%;
+}
+.hamburger-btn:hover {
+    background-color: #d80032;
 }
 .fa-bars {
     color: #f4f4f4;
@@ -190,6 +222,11 @@
     cursor: pointer;
     transition: transform 0.3s ease;
     z-index: 9998;
+    padding: 10px;
+    border-radius: 50%;
+}
+.rev-hamburger-btn:hover {
+    background-color: #d80032;
 }
 .fa-circle-xmark {
     color: #f4f4f4;

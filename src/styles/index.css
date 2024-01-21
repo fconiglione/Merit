@@ -33,6 +33,12 @@
     align-items: center;
     cursor: pointer;
     height: 150px;
+    transition: 0.3s ease-in-out;
+    border: 1px solid #f68896;
+}
+.home-nav-item:hover {
+    transform: translateY(-8px);
+    border: 1px solid #f4f4f4;
 }
 .home-nav-item i {
     color: #f4f4f4;
@@ -84,6 +90,11 @@
     align-items: center;
     gap: 15px;
     text-decoration: none;
+    border-radius: 15px;
+    padding: 2px 10px;
+}
+.view-all-students-nav a:hover {
+    background-color: #ef233c;
 }
 .add-students-nav h1, .add-students-nav a, .add-students-nav i {
     color: #f4f4f4;
@@ -114,9 +125,12 @@
     font-size: 1.5em;
     padding: 10px 15px;
     background-color: #ef233c;
-    border: none;
+    border: 1px solid #f68896;
     border-radius: 15px;
  }
+#student-form fieldset:last-child input {
+    cursor: pointer;
+}
 .student-form-content {
     display: flex;
     flex-direction: row;
@@ -131,23 +145,23 @@
     }
 }
 .student-form-content fieldset input:focus, .student-form-content form fieldset textarea:focus {
-    outline: none;
+    outline: 1px solid #f4f4f4;
 }
 #student-submit-btn {
     background-color: #ef233c;
-    border: none;
     color: #f4f4f4;
     font-family: "Inter", sans-serif;
     font-weight: 700;
     padding: 15px 10px;
     cursor: pointer;
     border-radius: 15px;
-    transition: ease 0.3s linear;
+    transition: 0.3s ease-in-out;
+    border: 1px solid #f68896;
 }
 #student-submit-btn:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
     transform: translateY(-8px);
     transition: transform 0.3s ease;
+    border: 1px solid #f4f4f4;
 }
 .students-table {
     display: flex;
@@ -215,6 +229,11 @@
     align-items: center;
     gap: 15px;
     text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 15px;
+}
+.view-all-courses-nav a:hover {
+    background-color: #ef233c;
 }
 .add-courses-nav h1, .add-courses-nav a, .add-courses-nav i {
     color: #f4f4f4;
@@ -245,7 +264,7 @@
     font-size: 1.5em;
     padding: 10px 15px;
     background-color: #ef233c;
-    border: none;
+    border: 1px solid #f68896;
     border-radius: 15px;
 }
 .course-form-content {
@@ -256,23 +275,23 @@
     gap: 30px;
 }
 .course-form-content fieldset input:focus, .course-form-content form fieldset textarea:focus {
-    outline: none;
+    outline: 1px solid #f4f4f4;
 }
 #course-submit-btn {
     background-color: #ef233c;
-    border: none;
     color: #f4f4f4;
     font-family: "Inter", sans-serif;
     font-weight: 700;
     padding: 15px 10px;
     cursor: pointer;
     border-radius: 15px;
-    transition: ease 0.3s linear;
+    transition: 0.3s ease-in-out;
+    border: 1px solid #f68896;
 }
 #course-submit-btn:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
     transform: translateY(-8px);
     transition: transform 0.3s ease;
+    border: 1px solid #f4f4f4;
 }
 .courses-table {
     display: flex;
@@ -346,6 +365,8 @@
     align-items: center;
     gap: 15px;
     text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 15px;
 }
 .add-results-nav h1, .add-results-nav a, .add-results-nav i {
     color: #f4f4f4;
@@ -376,8 +397,9 @@
     font-size: 1.5em;
     padding: 10px 15px;
     background-color: #ef233c;
-    border: none;
+    border: 1px solid #f68896;
     border-radius: 15px;
+    cursor: pointer;
 }
 .result-form-content {
     display: flex;
@@ -387,23 +409,23 @@
     gap: 30px;
 }
 .result-form-content fieldset select:focus, .result-form-content form fieldset textarea:focus {
-    outline: none;
+    outline: 1px solid #f4f4f4;
 }
 #result-submit-btn {
     background-color: #ef233c;
-    border: none;
     color: #f4f4f4;
     font-family: "Inter", sans-serif;
     font-weight: 700;
     padding: 15px 10px;
     cursor: pointer;
     border-radius: 15px;
-    transition: ease 0.3s linear;
+    transition: 0.3s ease-in-out;
+    border: 1px solid #f68896;
 }
 #result-submit-btn:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
     transform: translateY(-8px);
     transition: transform 0.3s ease;
+    border: 1px solid #f4f4f4;
 }
 @media screen and (max-width: 867px) {
     .result-form-content {
@@ -453,5 +475,8 @@
     background-color: #d80032;
 }
 .results-table-container tr:nth-child(odd) {
+    background-color: #ef233c;
+}
+.view-all-results-nav a:hover {
     background-color: #ef233c;
 }
