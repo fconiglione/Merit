@@ -33,6 +33,7 @@ function Courses() {
     // Updating the changes in data
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -116,6 +117,8 @@ function Courses() {
                                         type="text"
                                         id="code"
                                         name="code"
+                                        pattern="[A-Za-z]{4}\d{3}"
+                                        title="Course code must have 4 letters followed by 3 numbers."
                                         placeholder="Enter course code"
                                         value={formData.code}
                                         onChange={handleInputChange}
