@@ -47,6 +47,7 @@ function EditCourse() {
             // Add a notification
             alert("Course updated successfully!");
             // Redirect to the courses page after updating
+            window.location.href = '/courses';
         } catch (error) {
             console.error("Error updating course:", error.message);
         }

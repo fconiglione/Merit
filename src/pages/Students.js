@@ -156,7 +156,10 @@ function Home() {
                                     <td>{student.fname}</td>
                                     <td>{new Date(student.dob).toLocaleDateString()}</td>
                                     <td className="actions">
-                                        <a href="javascript:void(0)" title="Edit">
+                                        <a
+                                            href={`/data/edit-student/${student.student_id}`}
+                                            title="Edit"
+                                        >
                                             <i className="fa-solid fa-pen-to-square"></i>
                                         </a>
                                         <a

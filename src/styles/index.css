@@ -83,6 +83,20 @@
     justify-content: space-between;
     align-items: center;
 }
+.update-students-nav a {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 15px;
+    width: fit-content;
+}
+.update-students-nav a:hover {
+    background-color: #ef233c;
+}
 .view-all-students-nav a {
     display: flex;
     flex-direction: row;
@@ -96,7 +110,7 @@
 .view-all-students-nav a:hover {
     background-color: #ef233c;
 }
-.add-students-nav h1, .add-students-nav a, .add-students-nav i {
+.add-students-nav h1, .add-students-nav a, .update-students-nav i, .update-students-nav h1, .update-students-nav a, .update-students-nav i {
     color: #f4f4f4;
     font-size: 1em;
 }

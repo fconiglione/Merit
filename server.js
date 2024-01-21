@@ -51,6 +51,39 @@ app.post('/data/student-data', async (req, res) => {
     }
 });
 
+// Getting student data for editing
+
+app.get('/data/students/:student_id', async (req, res) => {
+    const student_id = req.params.student_id;
+
+    try {
+        const result = await pool.query('SELECT * FROM students WHERE student_id = $1', [student_id]);
+        if (result.rows.length === 0) {
+            res.status(404).json({ message: 'Student not found' });
+        } else {
+            res.status(200).json(result.rows[0]);
+        }
+    } catch (error) {
+        console.error('Error fetching course data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Update student data
+app.put('/data/update-student/:student_id', async (req, res) => {
+    const student_id = req.params.student_id;
+    const { fname, lname, dob } = req.body;
+
+    try {
+        await pool.query('UPDATE students SET fname = $1, lname = $2, dob = $3 WHERE student_id = $4', [fname, lname, dob, student_id]);
+
+        res.status(200).json({ message: 'Student updated successfully' });
+    } catch (error) {
+        console.error('Error updating student:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // Delete course data
 
 app.delete('/data/delete-student/:student_id', async (req, res) => {
