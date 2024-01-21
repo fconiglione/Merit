@@ -42,16 +42,33 @@ function Home() {
 
     // Submitting the new student entry with a try/catch block for errors
     const handleSubmit = async (event) => {
-        // Removing the default form submission
+        // Preventing the default form submission
         event.preventDefault();
+
         try {
-            // Posting the data
+            // Getting the dob from the form
+            const dob = new Date(formData.dob);
+
+            // Calculating the age
+            const today = new Date();
+            const age = today.getFullYear() - dob.getFullYear();
+
+            // Ensuring the student is at least 10 years old
+            if (age < 10) {
+                alert("The student must be at least 10 years old.");
+                return; // Stop the form submission if the student isn't at least 10 years old
+            }
+
+            // Continue with the form submission if age is valid
             await axios.post(apiUrl + '/data/student-data', formData);
+
             // Add a notification
             alert('Student added successfully!');
+
             // Fetch the new data once submitted
             const response = await axios.get(apiUrl + '/data/student-data');
             setStudents(response.data);
+
             // Resetting form data to be empty upon submission
             setFormData({
                 fname: '',

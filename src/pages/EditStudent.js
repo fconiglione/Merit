@@ -55,7 +55,21 @@ function EditStudent() {
     // Submitting the newly updated student entry with a try/catch block for any errors
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         try {
+            // Getting the dob from the form
+            const dob = new Date(formData.dob);
+
+            // Calculating the age
+            const today = new Date();
+            const age = today.getFullYear() - dob.getFullYear();
+
+            // Ensuring the student is at least 10 years old
+            if (age < 10) {
+                alert("The student must be at least 10 years old.");
+                return; // Stop the form submission if the student isn't at least 10 years old
+            }
+
             await axios.put(
                 apiUrl + '/data/update-student/' + student_id,
                 formData
