@@ -13,11 +13,15 @@ While the app currently has several buttons that are not yet functional, they ma
 Getting started with Merit is easy:
 
 1. First, clone the GitHub repository onto your machine. You can find it here: https://github.com/fconiglione/Merit
-2. Next, start the server by entering the following into the command line:
+2. Install the node package manager modules by entering the following into the command line:
+```bash
+npm install
+```
+3. Next, start the server by entering the following into the command line:
 ```bash
 node server.js
 ```
-3. Finally, launch the app using the package manager:
+4. Finally, launch the app using the package manager:
 ```bash
 npm start
 ```
