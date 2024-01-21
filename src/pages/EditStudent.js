@@ -110,7 +110,7 @@ function EditStudent() {
                                     />
                                 </fieldset>
                                 <fieldset>
-                                    <label htmlFor="lname">Last name</label>
+                                    <label htmlFor="lname">Family name</label>
                                     <input
                                         required
                                         type="text"

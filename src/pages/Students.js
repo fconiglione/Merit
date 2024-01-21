@@ -129,7 +129,7 @@ function Home() {
                                     />
                                 </fieldset>
                                 <fieldset>
-                                    <label htmlFor="lname">Last name</label>
+                                    <label htmlFor="lname">Family name</label>
                                     <input
                                         required
                                         type="text"
@@ -172,7 +172,7 @@ function Home() {
                     <table>
                         <thead>
                         <tr>
-                            <th>Last name</th>
+                            <th>Family name</th>
                             <th>First name</th>
                             <th>Date of birth</th>
                             <th></th>
