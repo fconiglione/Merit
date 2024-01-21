@@ -68,7 +68,7 @@ function Home() {
                             </div>
                         </div>
                     </a>
-                    <a href="/help-center">
+                    <a href="/">
                         <div className="home-nav-item">
                             <div>
                                 <i className="fa-solid fa-question"></i>
